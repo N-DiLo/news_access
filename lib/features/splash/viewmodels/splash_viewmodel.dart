@@ -17,7 +17,7 @@ class SplashViewModel {
     required BuildContext context,
     Object? arguments,
   }) async {
-    await Future.delayed(const Duration(seconds: 2)).then((_) {
+    await Future.delayed(const Duration(seconds: 3)).then((_) {
       if (context.mounted) {
         gotoNxtScreen(
           context: context,
