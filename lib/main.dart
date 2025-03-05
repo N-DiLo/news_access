@@ -4,6 +4,8 @@ import 'package:news_access/features/navigation/presentation/news_access_nav.dar
 import 'package:news_access/features/splash/presentation/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 
+import 'core/constants/news_colors.dart';
+
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Lexend',
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: orangeColor,
+          ),
           useMaterial3: true,
         ),
         routes: NewsAccessNav.routes,
