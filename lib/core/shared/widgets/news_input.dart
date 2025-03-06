@@ -66,7 +66,6 @@ class NewsInput extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: textColor,
               ),
-          textAlign: TextAlign.center,
           decoration: InputDecoration(
             constraints: constraints,
             contentPadding: const EdgeInsets.all(14),
@@ -85,13 +84,13 @@ class NewsInput extends StatelessWidget {
                 : null,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: orangeColor, width: 1),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
             ),
             disabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: orangeColor, width: 1),
               borderRadius: BorderRadius.circular(8),
             ),
             focusedErrorBorder: OutlineInputBorder(
@@ -99,7 +98,7 @@ class NewsInput extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
+              borderSide: BorderSide(color: orangeColor, width: 1),
               borderRadius: BorderRadius.circular(8),
             ),
             hintText: hintText ?? 'Enter hint text',
