@@ -117,7 +117,7 @@ class Article {
 }
 
 class Source {
-  final String? id;
+  final dynamic id;
   final String? name;
 
   Source({
@@ -126,7 +126,7 @@ class Source {
   });
 
   Source copyWith({
-    String? id,
+    dynamic id,
     String? name,
   }) =>
       Source(

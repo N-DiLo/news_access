@@ -5,7 +5,6 @@ import 'package:news_access/core/services/news_error_handler.dart';
 
 const String baseURL = String.fromEnvironment('BASE_URL');
 const String apiKEY = String.fromEnvironment('API_KEY');
-bool validToken = apiKEY != '' && apiKEY.isNotEmpty;
 
 class NewsNetwork {
   static const int serverTIMEOUT = 60;

@@ -7,7 +7,6 @@ import 'package:news_access/features/secondScreen/data/news_service.dart';
 class NewsState {
   bool isLoading;
   final bool status;
-
   final String message;
   bool nextPage;
   NewsModel? newsModel;
@@ -20,12 +19,13 @@ class NewsState {
     this.nextPage = false,
   });
 
-  NewsState copyWith(
-          {bool? isLoading,
-          bool? nextPage,
-          String? message,
-          NewsModel? newsModel,
-          bool? status}) =>
+  NewsState copyWith({
+    bool? isLoading,
+    bool? nextPage,
+    String? message,
+    NewsModel? newsModel,
+    bool? status,
+  }) =>
       NewsState(
         message: message ?? this.message,
         newsModel: newsModel ?? this.newsModel,
@@ -47,15 +47,17 @@ class NewsNotifier extends StateNotifier<NewsState> {
   Future<void> getNews({String? query}) async {
     try {
       final result = await newsService.getNews(query: query);
+      log('NEWS: $result');
       if (result != null && result.isNotEmpty) {
         final newsData = NewsModel.fromJson(result);
+
         state = NewsState(
           isLoading: false,
           status: true,
-          message: 'Fetched news',
+          message: 'Fetche successful',
           newsModel: newsData,
         );
-      } else if (result != null && result.isEmpty) {
+      } else {
         state = NewsState(
           isLoading: false,
           status: false,
@@ -63,7 +65,12 @@ class NewsNotifier extends StateNotifier<NewsState> {
         );
       }
     } catch (e) {
-      log('Error occurred: ${e.toString()} ');
+      log('Error Occurred: $e');
+      state = NewsState(
+        isLoading: false,
+        status: false,
+        message: 'No news data found',
+      );
       throw Exception('Error: $e');
     }
   }

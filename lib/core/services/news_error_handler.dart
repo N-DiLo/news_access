@@ -3,7 +3,7 @@ import 'package:news_access/core/shared/utils/news_toast.dart';
 import 'package:toastification/toastification.dart';
 
 class NewsErrorHandler {
-  static const _duration = Duration(seconds: 2);
+  static const _duration = Duration(seconds: 3);
 
   static void errorHanler(DioException e) {
     String message = _errorMessages(e);
@@ -18,21 +18,21 @@ class NewsErrorHandler {
 
   static String _errorMessages(DioException e) {
     if (e.response != null) {
-      final result = e.response?.data;
-      switch (e.response?.statusCode) {
+      final statusCode = e.response?.statusCode;
+      switch (statusCode) {
         case 400:
-          return result?['message'] ?? 'Bad request';
+          return 'Bad request: Something went wrong. Please try again.';
         case 401:
-          return result?['message'] ?? 'Unauthorized access';
+          return 'You don’t have permission to view this page.';
         case 404:
-          return result?['message'] ?? 'Page Not Found';
+          return 'Oops! We couldn’t find the page you were looking for.';
         case 429:
-          return result?['message'] ?? 'Too many attempts';
+          return 'Multiple attempts detected, please wait a moment.';
         case 500:
-          return result?['message'] ?? 'Server error. Try again!';
+          return 'Temporary server issue. Please try again later.';
 
         default:
-          return result?['message'] ?? 'Unexpected error. Please try again!';
+          return 'Unexpected error. Please try again!';
       }
     } else {
       return _timeoutErrors(e);
