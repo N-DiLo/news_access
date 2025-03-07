@@ -4,12 +4,9 @@ import 'package:news_access/core/constants/news_access_textstyles.dart';
 import 'package:news_access/core/constants/news_colors.dart';
 import 'package:news_access/core/shared/utils/news_access_sizes.dart';
 import 'package:news_access/core/shared/utils/news_text.dart';
-import 'package:news_access/core/shared/utils/news_toast.dart';
 import 'package:news_access/core/shared/widgets/news_btn.dart';
 import 'package:news_access/core/shared/widgets/news_input.dart';
-import 'package:news_access/core/shared/widgets/news_loader.dart';
-import 'package:news_access/features/secondScreen/providers/news_provider.dart';
-import 'package:toastification/toastification.dart';
+import 'package:news_access/features/firstScreen/viewmodels/first_screen_model.dart';
 
 class QueryScreen extends ConsumerStatefulWidget {
   const QueryScreen({super.key});
@@ -21,34 +18,12 @@ class QueryScreen extends ConsumerStatefulWidget {
 
 class _QueryScreenState extends ConsumerState<QueryScreen> {
   final _newsSearchController = TextEditingController();
+  final _firstScreenModel = FirstScreenModel();
 
   @override
   void dispose() {
     _newsSearchController.dispose();
     super.dispose();
-  }
-
-  Future<void> _searchNews() async {
-    final searchQuery = _newsSearchController.text.trim();
-    if (searchQuery.isEmpty) {
-      NewsToast.show(
-        type: ToastificationType.error,
-        toastStyle: ToastificationStyle.fillColored,
-        message: 'Enter a valid query',
-        style: bodyText.copyWith(
-          color: whiteColor,
-        ),
-      );
-
-      return;
-    } else {
-      NewsLoader.showSpinner(context);
-      await ref.watch(newsNotifierProvider.notifier).getNews(
-            query: searchQuery,
-          );
-      _newsSearchController.clear();
-      if (mounted) NewsLoader.hideSpinner(context);
-    }
   }
 
   @override
@@ -78,7 +53,11 @@ class _QueryScreenState extends ConsumerState<QueryScreen> {
             SizedBox(height: height(context, .04)),
             NewsButton(
               title: 'Search News',
-              onTap: () => _searchNews(),
+              onTap: () => _firstScreenModel.searchNews(
+                ref: ref,
+                context: context,
+                controller: _newsSearchController,
+              ),
               style: bodyMedium.copyWith(color: whiteColor),
             )
           ],

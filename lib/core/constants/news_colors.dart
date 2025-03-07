@@ -7,6 +7,7 @@ const darkColor = Color(0xff000F24);
 const transparent = Colors.transparent;
 
 const splashImg = 'assets/images/splash-ani.json';
+const sImg = 'assets/images/cn-search.png';
 
 const greyColor = {
   50: Color(0xffF2F4F7),

@@ -1,18 +1,18 @@
 class NewsArguments {
   String? newsURL;
-  String? newsDate;
+  String? newsData;
 
   NewsArguments({
     this.newsURL,
-    this.newsDate,
+    this.newsData,
   });
 
   NewsArguments copyWith({
-    String? newsDate,
+    String? newsData,
     String? newsURL,
   }) =>
       NewsArguments(
-        newsDate: newsDate ?? this.newsDate,
+        newsData: newsData ?? this.newsData,
         newsURL: newsURL ?? this.newsURL,
       );
 }
