@@ -15,7 +15,6 @@ class NewsRepository {
       final response = await NewsNetwork.get(endpoint: endpoint);
 
       if (response != null) {
-        log('API Response: $response');
         return response;
       }
       return null;

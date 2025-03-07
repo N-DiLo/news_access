@@ -47,7 +47,7 @@ class NewsNotifier extends StateNotifier<NewsState> {
   Future<void> getNews({String? query}) async {
     try {
       final result = await newsService.getNews(query: query);
-      log('NEWS: $result');
+
       if (result != null && result.isNotEmpty) {
         final newsData = NewsModel.fromJson(result);
 
