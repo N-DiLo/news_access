@@ -81,25 +81,27 @@ class _QueryScreenState extends ConsumerState<QueryScreen> {
                     text: 'Previous Queries',
                     style: bodyMedium,
                   ),
-                  GestureDetector(
-                    onTap: () => QueryWidget.delItem(
-                      context: context,
-                      ref: ref,
-                      item: '',
-                      onTap: () async {
-                        Navigator.pop(context);
-                        await ref
-                            .read(newsStoreProvider.notifier)
-                            .clearSearch();
-                      },
-                    ),
-                    child: NewsText(
-                      text: 'Delete All',
-                      style: bodyText.copyWith(
-                        color: orangeColor,
-                      ),
-                    ),
-                  ),
+                  queries.isEmpty
+                      ? const SizedBox.shrink()
+                      : GestureDetector(
+                          onTap: () => QueryWidget.delItem(
+                            context: context,
+                            ref: ref,
+                            item: '',
+                            onTap: () async {
+                              Navigator.pop(context);
+                              await ref
+                                  .read(newsStoreProvider.notifier)
+                                  .clearSearch();
+                            },
+                          ),
+                          child: NewsText(
+                            text: 'Delete All',
+                            style: bodyText.copyWith(
+                              color: orangeColor,
+                            ),
+                          ),
+                        ),
                 ],
               ),
               SizedBox(height: height(context, .02)),
