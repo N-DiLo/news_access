@@ -11,8 +11,6 @@ import 'package:news_access/features/secondScreen/domain/news_provider.dart';
 import 'package:toastification/toastification.dart';
 
 class FirstScreenModel {
-  final _storage = NewsStore();
-
   void gotoArticleScreen({required BuildContext context, Object? arguments}) {
     Navigator.pushNamed(context, NewsAccessNav.detail, arguments: arguments);
   }
@@ -36,11 +34,11 @@ class FirstScreenModel {
       return;
     } else {
       NewsLoader.showSpinner(context);
-      await _storage.saveSearch(searchQuery);
+      await ref.read(newsStoreProvider.notifier).saveSearch(searchQuery);
       await ref.watch(newsNotifierProvider.notifier).getNews(
             query: searchQuery,
           );
-
+      controller.clear();
       if (context.mounted) {
         NewsLoader.hideSpinner(context);
         gotoArticleScreen(
@@ -50,11 +48,10 @@ class FirstScreenModel {
           ),
         );
       }
-      controller.clear();
     }
   }
 
-  Future<void> loadHistory() async {
-    await _storage.loadSearch();
+  Future<void> loadHistory(WidgetRef ref) async {
+    await ref.watch(newsStoreProvider.notifier).loadSearch();
   }
 }

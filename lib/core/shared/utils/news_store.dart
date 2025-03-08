@@ -1,30 +1,45 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NewsStore {
+class NewsStoreNotifier extends StateNotifier<List<String>> {
+  NewsStoreNotifier() : super([]);
+
   static const String searchData = 'searchData';
-  List<String> _searchHistory = [];
+
   Future<void> loadSearch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _searchHistory = prefs.getStringList(searchData) ?? [];
+    state = prefs.getStringList(searchData) ?? [];
   }
 
   Future<void> saveSearch(String query) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (!_searchHistory.contains(query)) {
-      _searchHistory.insert(0, query);
+    if (!state.contains(query)) {
+      state = [query, ...state];
     }
-
-    await prefs.setStringList(searchData, _searchHistory);
+    await prefs.setStringList(searchData, state);
   }
 
-  List<String> getSearchHistory() {
-    return _searchHistory;
-  }
-
+//////////////////////////////
+///// REMOVE ALL QUERIES
+//////////////////////////////
   Future<void> clearSearch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _searchHistory.clear();
+    state = [];
     await prefs.remove(searchData);
   }
+
+//////////////////////////////
+///// REMOVE SINGLE QUERY
+//////////////////////////////
+  Future<void> removeSearch(String query) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    state = state.where((item) => item != query).toList();
+    await prefs.setStringList(searchData, state);
+  }
 }
+
+final newsStoreProvider =
+    StateNotifierProvider<NewsStoreNotifier, List<String>>((ref) {
+  return NewsStoreNotifier();
+});

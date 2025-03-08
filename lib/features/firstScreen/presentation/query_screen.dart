@@ -7,6 +7,7 @@ import 'package:news_access/core/shared/utils/news_store.dart';
 import 'package:news_access/core/shared/utils/news_text.dart';
 import 'package:news_access/core/shared/widgets/news_btn.dart';
 import 'package:news_access/core/shared/widgets/news_input.dart';
+import 'package:news_access/features/firstScreen/presentation/widgets/query_widget.dart';
 import 'package:news_access/features/firstScreen/viewmodels/first_screen_model.dart';
 
 class QueryScreen extends ConsumerStatefulWidget {
@@ -20,13 +21,12 @@ class QueryScreen extends ConsumerStatefulWidget {
 class _QueryScreenState extends ConsumerState<QueryScreen> {
   final _newsSearchController = TextEditingController();
   final _firstScreenModel = FirstScreenModel();
-  final NewsStore _store = NewsStore();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _firstScreenModel.loadHistory();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _firstScreenModel.loadHistory(ref);
     });
   }
 
@@ -38,7 +38,7 @@ class _QueryScreenState extends ConsumerState<QueryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final queries = _store.getSearchHistory();
+    final queries = ref.watch(newsStoreProvider);
 
     return Scaffold(
       backgroundColor: whiteColor,
@@ -74,9 +74,33 @@ class _QueryScreenState extends ConsumerState<QueryScreen> {
                 style: bodyMedium.copyWith(color: whiteColor),
               ),
               SizedBox(height: height(context, .03)),
-              NewsText(
-                text: 'Previous Queries',
-                style: bodyMedium,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  NewsText(
+                    text: 'Previous Queries',
+                    style: bodyMedium,
+                  ),
+                  GestureDetector(
+                    onTap: () => QueryWidget.delItem(
+                      context: context,
+                      ref: ref,
+                      item: '',
+                      onTap: () async {
+                        Navigator.pop(context);
+                        await ref
+                            .read(newsStoreProvider.notifier)
+                            .clearSearch();
+                      },
+                    ),
+                    child: NewsText(
+                      text: 'Delete All',
+                      style: bodyText.copyWith(
+                        color: orangeColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: height(context, .02)),
               if (queries.isEmpty)
@@ -104,15 +128,21 @@ class _QueryScreenState extends ConsumerState<QueryScreen> {
                       itemBuilder: (context, index) {
                         final item = queries[index];
 
-                        return ListTile(
-                          title: NewsText(
-                            text: item,
-                            style: bodyMedium,
-                          ),
+                        return QueryWidget(
+                          onTap: () async {
+                            _newsSearchController.text = item;
+                            _firstScreenModel.searchNews(
+                              context: context,
+                              ref: ref,
+                              controller: _newsSearchController,
+                            );
+                          },
+                          item: item,
+                          index: index + 1,
                         );
                       },
                       separatorBuilder: (context, index) => Divider(
-                        thickness: 0.5,
+                        thickness: 0.3,
                         color: greyColor[100]!,
                       ),
                     ),
