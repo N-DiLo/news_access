@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_access/core/constants/news_colors.dart';
+import 'package:news_access/core/constants/news_colors_images.dart';
 
 class NewsImageWidget extends StatelessWidget {
   const NewsImageWidget({
@@ -20,9 +20,13 @@ class NewsImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width ?? 40,
-      height: height ?? 40,
+      width: width ?? 50,
+      height: height ?? 50,
       decoration: BoxDecoration(
+        border: Border.all(
+          color: greyColor[100]!,
+          width: 1.5,
+        ),
         shape: BoxShape.circle,
         image: DecorationImage(
           fit: fit ?? BoxFit.cover,

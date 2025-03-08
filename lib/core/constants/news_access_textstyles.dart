@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'news_colors.dart';
+import 'news_colors_images.dart';
 
 TextStyle bodyLarge = GoogleFonts.lexend(
   fontSize: 20,

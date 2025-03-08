@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_access/core/constants/news_access_textstyles.dart';
-import 'package:news_access/core/constants/news_colors.dart';
+import 'package:news_access/core/constants/news_colors_images.dart';
 import 'package:news_access/core/shared/utils/news_text.dart';
 import 'package:toastification/toastification.dart';
 
@@ -23,15 +23,19 @@ class NewsToast {
         break;
     }
     toastification.show(
-        showIcon: showIcon,
-        context: context,
-        style: toastStyle,
-        type: type,
-        autoCloseDuration: autoCloseDuration,
-        title: NewsText(
-          text: message,
-          style: style ?? bodySmall.copyWith(color: whiteColor),
-          overflow: TextOverflow.clip,
-        ));
+      showIcon: showIcon,
+      context: context,
+      style: toastStyle,
+      type: type,
+      autoCloseDuration: autoCloseDuration,
+      title: NewsText(
+        text: message,
+        style: style ??
+            bodySmall.copyWith(
+              color: whiteColor,
+            ),
+        overflow: TextOverflow.clip,
+      ),
+    );
   }
 }

@@ -38,11 +38,13 @@ class NewsState {
 class NewsNotifier extends StateNotifier<NewsState> {
   final NewsService newsService;
   NewsNotifier(this.newsService)
-      : super(NewsState(
-          status: false,
-          message: 'Loading...',
-          isLoading: true,
-        ));
+      : super(
+          NewsState(
+            status: false,
+            message: 'Loading...',
+            isLoading: true,
+          ),
+        );
 
   Future<void> getNews({String? query}) async {
     try {

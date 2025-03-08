@@ -5,7 +5,7 @@ import 'package:news_access/features/navigation/presentation/news_access_nav.dar
 import 'package:news_access/features/splash/presentation/splash_screen.dart';
 import 'package:toastification/toastification.dart';
 
-import 'core/constants/news_colors.dart';
+import 'core/constants/news_colors_images.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

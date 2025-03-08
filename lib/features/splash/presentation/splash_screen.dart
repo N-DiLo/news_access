@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:news_access/core/constants/news_access_textstyles.dart';
-import 'package:news_access/core/constants/news_colors.dart';
+import 'package:news_access/core/constants/news_colors_images.dart';
 import 'package:news_access/core/shared/utils/news_text.dart';
 import 'package:news_access/features/splash/viewmodels/splash_viewmodel.dart';
 

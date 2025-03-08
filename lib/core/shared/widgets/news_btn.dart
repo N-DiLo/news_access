@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_access/core/constants/news_colors.dart';
+import 'package:news_access/core/constants/news_colors_images.dart';
 import 'package:news_access/core/shared/utils/news_access_sizes.dart' as hgt;
 
 class NewsButton extends StatelessWidget {

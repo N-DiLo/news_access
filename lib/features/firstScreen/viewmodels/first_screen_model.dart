@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:news_access/core/constants/news_access_textstyles.dart';
-import 'package:news_access/core/constants/news_colors.dart';
+import 'package:news_access/core/constants/news_colors_images.dart';
+import 'package:news_access/core/shared/utils/news_store.dart';
 import 'package:news_access/core/shared/utils/news_toast.dart';
 import 'package:news_access/core/shared/widgets/news_loader.dart';
+import 'package:news_access/features/navigation/models/news_arguments.dart';
 import 'package:news_access/features/navigation/presentation/news_access_nav.dart';
-import 'package:news_access/features/secondScreen/providers/news_provider.dart';
+import 'package:news_access/features/secondScreen/domain/news_provider.dart';
 import 'package:toastification/toastification.dart';
 
 class FirstScreenModel {
+  final _storage = NewsStore();
+
   void gotoArticleScreen({required BuildContext context, Object? arguments}) {
     Navigator.pushNamed(context, NewsAccessNav.detail, arguments: arguments);
   }
@@ -32,17 +36,25 @@ class FirstScreenModel {
       return;
     } else {
       NewsLoader.showSpinner(context);
+      await _storage.saveSearch(searchQuery);
       await ref.watch(newsNotifierProvider.notifier).getNews(
             query: searchQuery,
           );
-      controller.clear();
+
       if (context.mounted) {
         NewsLoader.hideSpinner(context);
         gotoArticleScreen(
           context: context,
-          arguments: searchQuery,
+          arguments: NewsArguments(
+            newsData: searchQuery,
+          ),
         );
       }
+      controller.clear();
     }
+  }
+
+  Future<void> loadHistory() async {
+    await _storage.loadSearch();
   }
 }
