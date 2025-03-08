@@ -93,6 +93,17 @@ flutter pub get
 flutter run --dart-define-from-file=.env.json
 ```
 
+6. Build the app:
+
+```
+flutter build apk --dart-define-from-file=.env.json
+```
+
+## Test App
+
+Test the app on an online simulating platform with the link below:
+[Appetize.io](https://appetize.io/app/b_ruhxxwbihajbrpfvajbc2xggoa)
+
 ## Dependencies
 
 The app uses the following dependencies:
