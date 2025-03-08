@@ -101,7 +101,7 @@ flutter build apk --dart-define-from-file=.env.json
 
 ## Test App
 
-Test the app on an online simulating platform with the link below:
+Test the app on an online simulating platform with the link:
 [Appetize.io](https://appetize.io/app/b_ruhxxwbihajbrpfvajbc2xggoa)
 
 ## Dependencies
